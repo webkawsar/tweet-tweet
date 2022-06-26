@@ -17,7 +17,7 @@ let tweets = [];
 
 // helper functions
 const validateInput = (text) => {
-    
+
     let isError = false;
     if(!text.length || text.length > 250) {
         isError = true;
@@ -33,7 +33,7 @@ const generateTime = () => {
 
 const addTweetToUI = ({id, tweetText, createdAt}) => {
     const newElm = `<li
-                        class="list-group-item d-flex justify-content-between align-items-start"
+                        class="list-group-item d-flex justify-content-between align-items-start tweet-${id}"
                     >
                         <div class="ms-2 me-auto">
                         <div class="fw-bold" id="tweetText">
@@ -45,7 +45,7 @@ const addTweetToUI = ({id, tweetText, createdAt}) => {
                         </div>
                         <button
                             type="button"
-                            class="btn btn-secondary tweet-${id}"
+                            class="btn btn-secondary delete-tweet"
                             id="tweetDelete"
                         >
                         Delete
@@ -78,7 +78,56 @@ const resetInput = () => {
     tweetInputElm.value = '';
 }
 
+const showAllTweetsToUI = (tweetsArr) => {
 
+    listGroupElm.innerHTML = '';
+    tweetsArr.forEach(item => {
+
+        const htmlListElm = `<li
+                            class="list-group-item d-flex justify-content-between align-items-start tweet-${item.id}"
+                        >
+                            <div class="ms-2 me-auto">
+                            <div class="fw-bold" id="tweetText">
+                                ${item.tweetText}
+                            </div>
+                            <small class="text-muted" id="tweetTime"
+                                >${item.createdAt}</small
+                            >
+                            </div>
+                            <button
+                                type="button"
+                                class="btn btn-secondary delete-tweet"
+                                id="tweetDelete"
+                            >
+                            Delete
+                            </button>
+                        </li>`
+        listGroupElm.insertAdjacentHTML('afterbegin', htmlListElm);
+
+    })
+}
+
+const getTweetId = (elm) => {
+        
+    return Number(elm.parentElement.classList[4].split('-')[1]);
+}
+
+const removeTweetFromUI = (id) => {
+    document.querySelector(`.tweet-${id}`).remove();
+}
+
+const removeTweetFromDataStore = (id) => {
+    tweets = tweets.filter(item => item.id !== id);
+}
+
+const removeFromLocalStorage = (id) => {
+    // pick from local storage
+    let tweets = JSON.parse(localStorage.getItem('tweets'));
+    // filter data
+    tweets = tweets.filter(item => item.id !== id);
+    // save data to storage
+    localStorage.setItem('tweets', JSON.stringify(tweets));
+}
 
 
 
@@ -114,8 +163,31 @@ formElm.addEventListener('submit', (e) => {
     resetInput();
 })
 
+document.addEventListener('DOMContentLoaded', e => {
+    // checking item into local storage
+    const allTweets = localStorage.getItem('tweets');
+    if(allTweets) {
+        tweets = JSON.parse(allTweets);
+        showAllTweetsToUI(tweets);
+    }
+})
 
 
+// delete event listener
+listGroupElm.addEventListener('click', (e) => {
+    if(e.target.classList.contains('delete-tweet')) {
+        
+        const id = getTweetId(e.target);
+        // delete tweet from UI
+        removeTweetFromUI(id);
+
+        // delete tweet from data store
+        removeTweetFromDataStore(id);
+
+        // delete tweet from local storage
+        removeFromLocalStorage(id);
+    }
+})
 
 
 
