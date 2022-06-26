@@ -33,10 +33,10 @@
                     >Type Tweet Text</label
                   >
                   <input type="text" class="form-control" id="tweetInput" />
-                  <div class="form-text">0 / 250 character.</div>
+                  <div class="form-text" id="character">0 / 250 character.</div>
 
                   <div class="d-grid gap-2 mt-3">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary" id="submit">
                       Submit
                     </button>
                   </div>
@@ -59,18 +59,26 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <ol class="list-group list-group-numbered">
-                    <li
+                  <ol class="list-group list-group-numbered" id="listGroup">
+                    <!-- <li
                       class="list-group-item d-flex justify-content-between align-items-start"
                     >
                       <div class="ms-2 me-auto">
-                        <div class="fw-bold">Subheading</div>
-                        <small class="text-muted">3 days ago</small>
+                        <div class="fw-bold" id="tweetText">
+                          Lorem ipsum dolor sit.
+                        </div>
+                        <small class="text-muted" id="tweetTime"
+                          >3 days ago</small
+                        >
                       </div>
-                      <button type="button" class="btn btn-secondary">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        id="tweetDelete"
+                      >
                         Delete
                       </button>
-                    </li>
+                    </li> -->
                   </ol>
 
                   <!-- <div class="accordion" id="accordionExample">
@@ -123,5 +131,6 @@
     integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
     crossorigin="anonymous"
   ></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
   <script src="script.js"></script>
 </html>
