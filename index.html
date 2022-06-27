@@ -32,8 +32,15 @@
                   <label for="tweetInput" class="form-label"
                     >Type Tweet Text</label
                   >
-                  <input type="text" class="form-control" id="tweetInput" />
-                  <div class="form-text" id="character">0 / 250 character.</div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="tweetInput"
+                    autocomplete="off"
+                  />
+                  <div class="form-text" id="character">
+                    <span id="minCharacter">0</span> / 250 character.
+                  </div>
 
                   <div class="d-grid gap-2 mt-3">
                     <button type="submit" class="btn btn-primary" id="submit">

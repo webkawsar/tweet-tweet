@@ -1,6 +1,7 @@
 // Select All Elements
 const tweetInputElm = document.querySelector('#tweetInput');
 const inputCharacterElm = document.querySelector('#character');
+const minCharacterElm = document.querySelector('#minCharacter');
 const submitElm = document.querySelector('#submit');
 
 const searchTweetElm = document.querySelector('#searchTweet');
@@ -16,8 +17,9 @@ let tweets = [];
 
 
 // helper functions
-const validateInput = (text) => {
+const validateInput = (inputString) => {
 
+    const text = inputString.trim();
     let isError = false;
     if(!text.length || text.length > 250) {
         isError = true;
@@ -129,6 +131,29 @@ const removeFromLocalStorage = (id) => {
     localStorage.setItem('tweets', JSON.stringify(tweets));
 }
 
+const countInputText = (txt) => {
+
+    // check character count
+    minCharacterElm.textContent = txt.length;
+    if(!txt.length || txt.length > 250) {
+        
+        // input character style
+        inputCharacterElm.style.color = 'red';
+    } else {
+        // input character style
+        inputCharacterElm.style.color = 'black';
+    }
+}
+
+const resetCharacterCount = () => {
+    // reset character element style
+    inputCharacterElm.style.color = 'black';
+
+    // reset count
+    minCharacterElm.textContent = '0';
+
+}
+
 
 
 
@@ -141,7 +166,7 @@ formElm.addEventListener('submit', (e) => {
     // validate input
     const isError = validateInput(tweetInput);
     if(isError) {
-        alert('Please provide valid input');
+        alert('Please provide text character between 1-250');
         return;
     }
 
@@ -161,6 +186,9 @@ formElm.addEventListener('submit', (e) => {
 
     // reset the input
     resetInput();
+
+    // reset count and style
+    resetCharacterCount();
 })
 
 document.addEventListener('DOMContentLoaded', e => {
@@ -191,7 +219,13 @@ listGroupElm.addEventListener('click', (e) => {
 
 
 
+// form text input
+tweetInputElm.addEventListener('keyup', (e) => {
 
+    // check input text count
+    countInputText(e.target.value);
+   
+})
 
 
 
